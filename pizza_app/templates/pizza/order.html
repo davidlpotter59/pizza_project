@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ordering</title>
+</head>
+<body>
+    <h1>Order Page</h1>
+    <a href="{% url 'home' %}">Return to the home Page....</a>
+    <br><br>
+
+    <h3>{{ note }}</h3>
+
+    {% if created_pizza_pk %}
+        <a href="{% url 'edit_order' created_pizza_pk %}">Edit your Order </a>
+    {% endif%}
+    
+    <!-- <form enctype="multipart/form-data" action="{% url 'order' %}" method='POST'> -->
+    <form action="{% url 'order' %}" method='POST'>
+        {% csrf_token %}
+
+        {{ pizzaform }}
+
+        <input type="submit" value="Order Pizza">
+    </form>
+
+    <br><br>
+
+    <h1>Want more than one Pizza?</h1>
+
+    <form action="{% url 'pizzas' %}" method="GET">
+        {{ multiple_form }}
+        <input type="submit" value="Get Pizzas">
+
+    </form>
+
+</body>
+</html>
