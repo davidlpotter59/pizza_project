@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
-</head>
-<body>
-    <h1>this is my home page</h1>
-    <a href="{%  url 'order' %}">Order your Pizza</a>
-</body>
-</html>
+{% extends 'pizza/base.html' %}
+
+{% block 'body' %}
+
+<div class="text-center">
+    {% load static %}
+    <img src="{% static 'nandiasgarden.jpg' %}" alt="Nadia's Garden" class="img-fluid">
+</div> 
+
+{% endblock %}

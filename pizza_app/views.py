@@ -19,16 +19,24 @@ def order(request):
             note = "Thanks for Ordering!  Your %s %s and %s Pizza is on its way....."%(filled_form.cleaned_data['size'],
                    filled_form.cleaned_data['topping1'],
                    filled_form.cleaned_data['topping2'],)   
-            new_form = PizzaForm()
+            filled_form = PizzaForm()
             context = {
                 'created_pizza_pk': created_pizza_pk,
-                'pizzaform': new_form,
+                'pizzaform': filled_form,
                 'note': note,
                 'multiple_form': multiple_form,
             }
-
+        else:
+            created_pizza_pk = None
+            note = "Pizza order has failed - please try again"
             # newform = PizzaForm()
-            return render(request, "pizza/order.html", context)
+        context = {
+            'created_pizza_pk': created_pizza_pk,
+            'pizzaform': filled_form,
+            'note': note,
+            'multiple_form': multiple_form,
+        }
+        return render(request, "pizza/order.html", context)
               
     else:
         context = {
@@ -73,7 +81,6 @@ def pizzas(request):
 def edit_order(request, pk):
     pizza = Pizza.objects.get(pk=pk)
     form = PizzaForm(instance=pizza)
-    note  = "No changes Made"
     if request.method == 'POST':
         filled_form = PizzaForm(request.POST, instance=pizza)
         if filled_form.is_valid():
@@ -81,10 +88,17 @@ def edit_order(request, pk):
             form = filled_form
             note = "Order has been updated"
 
-    context = {
-        'pizzaform': form,
-        'pizza': pizza,
-        'note': note,
-    }
+            context = {
+                'pizzaform': form,
+                'pizza': pizza,
+                'note': note,
+            }
 
+            return render(request, 'pizza/edit_order.html',context,)
+
+    context = {
+    'pizzaform': form,
+    'pizza': pizza,
+    }
+    
     return render(request, 'pizza/edit_order.html',context,)

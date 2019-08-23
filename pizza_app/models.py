@@ -12,4 +12,4 @@ class Pizza(models.Model):
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.topping1
+        return (self.topping1 + " & " + self.topping2)
